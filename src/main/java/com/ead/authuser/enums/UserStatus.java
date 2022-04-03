@@ -1,4 +1,6 @@
-package com.ead.authuser.models.enums;
+package com.ead.authuser.enums;
 
-public class UserStatus {
+public enum UserStatus {
+    ACTIVE,
+    BLOCKED
 }
