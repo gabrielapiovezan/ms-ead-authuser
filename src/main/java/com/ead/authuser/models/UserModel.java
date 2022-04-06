@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,7 +23,10 @@ public class UserModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(name = "user_id", updatable = false, nullable = false, columnDefinition = "VARCHAR(36)")
+    @Type(type = "uuid-char")
     private UUID userId;
     @Column(nullable = false, unique = true, length = 50)
     private String userName;
@@ -30,6 +35,8 @@ public class UserModel implements Serializable {
     @Column(nullable = false, length = 255)
     @JsonIgnore
     private String password;
+    @JsonIgnore
+    private String oldPassword;
     @Column(nullable = false, length = 150)
     private String fullName;
     @Column(nullable = false)
