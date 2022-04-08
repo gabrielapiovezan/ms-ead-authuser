@@ -5,6 +5,7 @@ import com.ead.authuser.enums.UserStatus;
 import com.ead.authuser.enums.UserType;
 import com.ead.authuser.models.UserModel;
 import com.ead.authuser.services.UserService;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,8 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<Object> registerUser (@RequestBody  UserDTO userDTO) {
+    public ResponseEntity<Object> registerUser (@RequestBody
+                                                @JsonView(UserDTO.UserView.RegistrationPost.class) UserDTO userDTO) {
         if (userService.existsByUserName(userDTO.getUserName())){
             ResponseEntity.status(HttpStatus.CONFLICT).body("Error: UserName is already taken!");
     }
