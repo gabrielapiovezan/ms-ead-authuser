@@ -6,6 +6,7 @@ import com.ead.authuser.services.UserService;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -50,7 +51,9 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    ResponseEntity<Object> updateUser(@PathVariable UUID userId, @RequestBody @JsonView(UserDTO.UserView.UserPut.class) UserDTO userDTO) {
+    ResponseEntity<Object> updateUser(@PathVariable UUID userId,
+                                      @RequestBody @Validated(UserDTO.UserView.UserPut.class)
+                                      @JsonView(UserDTO.UserView.UserPut.class) UserDTO userDTO) {
         var user = userService.findById(userId);
         if (user.isEmpty()) {
             return ResponseEntity.status(NOT_FOUND).body("User not found");
@@ -66,7 +69,9 @@ public class UserController {
     }
 
     @PutMapping("/{userId}/password")
-    ResponseEntity<Object> updatePassWord(@PathVariable UUID userId, @RequestBody @JsonView(UserDTO.UserView.PassWordPut.class) UserDTO userDTO) {
+    ResponseEntity<Object> updatePassWord(@PathVariable UUID userId,
+                                          @RequestBody @Validated(UserDTO.UserView.PassWordPut.class)
+                                          @JsonView(UserDTO.UserView.PassWordPut.class) UserDTO userDTO) {
         var user = userService.findById(userId);
         if (user.isEmpty()) {
             return ResponseEntity.status(NOT_FOUND).body("User not found");
@@ -83,7 +88,9 @@ public class UserController {
     }
 
     @PutMapping("/{userId}/image")
-    ResponseEntity<Object> updateImage(@PathVariable UUID userId, @RequestBody @JsonView(UserDTO.UserView.ImagePut.class) UserDTO userDTO) {
+    ResponseEntity<Object> updateImage(@PathVariable UUID userId,
+                                       @RequestBody @Validated(UserDTO.UserView.ImagePut.class)
+                                       @JsonView(UserDTO.UserView.ImagePut.class) UserDTO userDTO) {
         var user = userService.findById(userId);
         if (user.isEmpty()) {
             return ResponseEntity.status(NOT_FOUND).body("User not found");
