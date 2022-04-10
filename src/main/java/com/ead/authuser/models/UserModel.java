@@ -56,6 +56,6 @@ public class UserModel implements Serializable {
     private LocalDateTime lastUpdateDate;
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDateTime crationDate;
+    private LocalDateTime creationDate;
 
 }

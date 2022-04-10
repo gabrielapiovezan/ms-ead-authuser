@@ -3,7 +3,12 @@ package com.ead.authuser.services;
 import com.ead.authuser.models.UserModel;
 import com.ead.authuser.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,4 +55,10 @@ public class UserServiceImpl implements UserService {
     public boolean existsByUserEmail(String email) {
         return userRepository.existsByEmail(email);
     }
+
+    @Override
+    public Page<UserModel> findAll(Specification<UserModel> spec,Pageable pageable) {
+        return userRepository.findAll(spec, pageable);
+    }
+
 }
