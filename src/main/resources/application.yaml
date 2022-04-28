@@ -18,3 +18,10 @@ spring:
         show_sql: true
 
         dialect: org.hibernate.dialect.MySQL8Dialect
+
+logging:
+  level:
+    com.ead: TRACE
+    root: INFO
+    org.springframework.web: DEBUG
+    org.hibernate: INDO

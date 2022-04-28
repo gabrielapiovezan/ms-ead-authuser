@@ -6,6 +6,7 @@ import com.ead.authuser.services.UserService;
 import com.ead.authuser.specifications.SpecificationTemplate;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,7 +23,7 @@ import java.util.UUID;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.http.HttpStatus.*;
-
+@Log4j2
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -57,6 +58,8 @@ public class UserController {
 
     @DeleteMapping("/{userId}")
     ResponseEntity<Object> deleteUser(@PathVariable UUID userId) {
+        log.debug("DELETE updateUser userDTO saved {}", userId);
+        log.info("DELETE user deleted with successfully {}", userId);
         var user = userService.findById(userId);
         if (user.isEmpty()) {
             return ResponseEntity.status(NOT_FOUND).body("User not found");
@@ -70,6 +73,7 @@ public class UserController {
     ResponseEntity<Object> updateUser(@PathVariable UUID userId,
                                       @RequestBody @Validated(UserDTO.UserView.UserPut.class)
                                       @JsonView(UserDTO.UserView.UserPut.class) UserDTO userDTO) {
+        log.debug("PUT updateUser userDTO received {}", userDTO.toString());
         var user = userService.findById(userId);
         if (user.isEmpty()) {
             return ResponseEntity.status(NOT_FOUND).body("User not found");
@@ -80,6 +84,8 @@ public class UserController {
             userModel.setCpf(userDTO.getCpf());
             userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
             userService.save(userModel);
+            log.debug("PUT updateUser userDTO saved {}", userDTO);
+            log.info("user saved successfully userId {}", userModel.getUserId());
             return ResponseEntity.status(OK).body(userModel);
         }
     }
@@ -90,6 +96,7 @@ public class UserController {
                                           @JsonView(UserDTO.UserView.PassWordPut.class) UserDTO userDTO) {
         var user = userService.findById(userId);
         if (user.isEmpty()) {
+            log.warn("Missatched older password {}", userDTO.getUserName());
             return ResponseEntity.status(NOT_FOUND).body("User not found");
         }
         if (!user.get().getPassword().equals(userDTO.getOldPassword())) {
