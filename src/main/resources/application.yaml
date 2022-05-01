@@ -24,4 +24,4 @@ logging:
     com.ead: TRACE
     root: INFO
     org.springframework.web: DEBUG
-    org.hibernate: INDO
+    org.hibernate: INFO
