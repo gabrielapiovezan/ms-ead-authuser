@@ -1,0 +1,16 @@
+package com.ead.authuser.services;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.UUID;
+@Service
+public class UtilsServiceImpl implements UtilsService{
+
+    @Override
+    public String utilsService(UUID userId,Pageable pageable) {
+        String REQUEST_URI = "http://localhost:8082";
+        return REQUEST_URI +"/courses?userId="+userId+"&page="+pageable.getPageNumber()+"&size="+pageable.getPageSize()+"&sort="+pageable.getSort().toString().replaceAll(": ", ",");
+
+    }
+}
