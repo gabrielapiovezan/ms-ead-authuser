@@ -1,4 +1,4 @@
-package com.ead.authuser.dto;
+package com.ead.authuser.dtos;
 
 import com.ead.authuser.validation.UserNameConstraint;
 import com.fasterxml.jackson.annotation.JsonView;

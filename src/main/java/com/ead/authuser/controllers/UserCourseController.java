@@ -1,7 +1,7 @@
 package com.ead.authuser.controllers;
 
 import com.ead.authuser.clients.UserClient;
-import com.ead.authuser.dto.CourseDTO;
+import com.ead.authuser.dtos.CourseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
