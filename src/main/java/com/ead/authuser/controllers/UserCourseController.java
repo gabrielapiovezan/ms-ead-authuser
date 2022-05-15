@@ -44,17 +44,16 @@ public class UserCourseController {
 
         var optUserModer = userService.findById(userId);
 
-        if (optUserModer.isEmpty()){
+        if (optUserModer.isEmpty()) {
             return ResponseEntity.status(NOT_FOUND).body("User Not Found");
         }
 
-        if(userCourseService.existByUserAndCourseId(optUserModer.get(),userCourseDTO.getCourseId())){
+        if (userCourseService.existByUserAndCourseId(optUserModer.get(), userCourseDTO.getCourseId())) {
             return ResponseEntity.status(CONFLICT).body("Error:Subscription already exists");
         }
-        UserCourseModel userCourseModel = userCourseService.save(optUserModer.get().convertToUserCourseModel(userId));
+        UserCourseModel userCourseModel = userCourseService.save(optUserModer.get().convertToUserCourseModel(userCourseDTO.getCourseId()));
         return ResponseEntity.status(CREATED).body(userCourseModel);
 
-        //return null;
     }
 }
 
