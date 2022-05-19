@@ -29,7 +29,7 @@ public class CourseClient {
     private final UtilsService utilsService;
 
 
-    @Value("${ead.api.url.auth-user}")
+    @Value("${ead.api.url.course}")
     String REQUEST_URL_COURSE;
 
     public Page<CourseDTO> getAllCoursesByUser(UUID userId, Pageable pageable) {
