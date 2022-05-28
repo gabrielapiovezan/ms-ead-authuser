@@ -1,7 +1,8 @@
 package com.ead.authuser.services;
 
-import com.ead.authuser.clients.CourseClient;
+import com.ead.authuser.enums.ActionType;
 import com.ead.authuser.models.UserModel;
+import com.ead.authuser.publishers.UserEventPublisher;
 import com.ead.authuser.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final CourseClient courseClient;
+    private final UserEventPublisher userEventPublisher;
 
     @Override
     public List<UserModel> findAll() {
@@ -46,6 +47,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(UserModel userModel) {
         userRepository.save(userModel);
+    }
+
+    @Override
+    @Transactional
+    public UserModel saveUser(UserModel userModel) {
+        save(userModel);
+        userEventPublisher.publishUserEvent(userModel.convertToUserEventDTO(), ActionType.CREATE);
+        return userModel;
     }
 
     @Override

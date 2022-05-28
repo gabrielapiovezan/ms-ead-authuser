@@ -14,13 +14,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-#      dialect: org.hibernate.dialect.MySQL8Dialect
-#      jdbc:
-#        lob.non-contextual-creation: true
     properties:
       hibernate:
         show_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
+  rabbitmq:
+    addresses: amqps://qlpqgslv:5iz5l1wnCLexdw328B3wf1yurbVB_IM7@woodpecker.rmq.cloudamqp.com/qlpqgslv
 
 logging:
   level:
@@ -33,6 +32,9 @@ ead:
   api:
     url:
       course: 'http://ead-course-service/ead-course'
+  broker:
+    exchange:
+      userEvent: ead.userevent
 
 eureka:
   client:

@@ -20,6 +20,8 @@ public interface UserService {
 
     void save(UserModel userModel);
 
+    UserModel saveUser(UserModel userModel);
+
     public boolean existsByUserName(String userName);
 
     boolean existsByUserEmail(String email);
