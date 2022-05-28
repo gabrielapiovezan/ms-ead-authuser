@@ -19,6 +19,6 @@ public class UserEventPublisher {
     public void publishUserEvent(UserEventDTO userEvent, ActionType actionType) {
         userEvent.setActionType(actionType.toString());
 
-        rabbitTemplate.convertAndSend(exchangeUxerEvent, userEvent);
+        rabbitTemplate.convertAndSend(exchangeUxerEvent, "", userEvent);
     }
 }
