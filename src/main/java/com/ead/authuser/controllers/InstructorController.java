@@ -32,7 +32,7 @@ public class InstructorController {
         return optUser.<ResponseEntity<Object>>map(userModel -> {
             userModel.setUserType(UserType.INSTRUCTOR);
             userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
-            userService.save(userModel);
+            userService.updateUser(userModel);
             return ResponseEntity.status(OK).body(userModel);
         }).orElseGet(() -> ResponseEntity.status(NOT_FOUND).body("User not found"));
     }

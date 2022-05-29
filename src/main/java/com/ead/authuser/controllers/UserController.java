@@ -66,7 +66,7 @@ public class UserController {
         if (user.isEmpty()) {
             return ResponseEntity.status(NOT_FOUND).body("User not found");
         } else {
-            userService.delete(user.get());
+            userService.deleteUser(user.get());
             return ResponseEntity.status(OK).body("User deleted with success");
         }
     }
@@ -80,12 +80,12 @@ public class UserController {
         if (user.isEmpty()) {
             return ResponseEntity.status(NOT_FOUND).body("User not found");
         } else {
-            var userModel = userService.update(user.get());
+            var userModel = user.get();
             userModel.setFullName(userDTO.getFullName());
             userModel.setPhoneNumber(userDTO.getPhoneNumber());
             userModel.setCpf(userDTO.getCpf());
             userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
-            userService.save(userModel);
+            userService.updateUser(userModel);
             log.debug("PUT updateUser userDTO saved {}", userDTO);
             log.info("user saved successfully userId {}", userModel.getUserId());
             return ResponseEntity.status(OK).body(userModel);
@@ -107,7 +107,7 @@ public class UserController {
             var userModel = userService.update(user.get());
             userModel.setPassword(userDTO.getPassword());
             userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
-            userService.save(userModel);
+            userService.updatePassword(userModel);
             return ResponseEntity.status(OK).body("PassWord updated successfull. ");
         }
     }
@@ -123,7 +123,7 @@ public class UserController {
             var userModel = userService.update(user.get());
             userModel.setImageUrl(userDTO.getImageUrl());
             userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
-            userService.save(userModel);
+            userService.updateUser(userModel);
             return ResponseEntity.status(OK).body(userModel);
         }
     }

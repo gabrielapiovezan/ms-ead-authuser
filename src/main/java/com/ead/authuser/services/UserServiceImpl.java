@@ -72,4 +72,26 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll(spec, pageable);
     }
 
+    @Override
+    public UserModel updatePassword(UserModel userModel) {
+        save(userModel);
+        return userModel;
+    }
+
+    @Override
+    @Transactional
+    public UserModel updateUser(UserModel userModel) {
+        save(userModel);
+        userEventPublisher.publishUserEvent(userModel.convertToUserEventDTO(), ActionType.UPDATE);
+        return userModel;
+    }
+
+    @Override
+    @Transactional
+    public UserModel deleteUser(UserModel userModel) {
+        delete(userModel);
+        userEventPublisher.publishUserEvent(userModel.convertToUserEventDTO(), ActionType.DELETE);
+        return userModel;
+    }
+
 }
