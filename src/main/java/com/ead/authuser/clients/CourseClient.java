@@ -44,7 +44,7 @@ public class CourseClient {
             ResponseEntity<ResponsePageDTO<CourseDTO>> result = restTemplate.exchange(url, HttpMethod.GET, null, responseType);
             searchResult = result.getBody().getContent();
 
-            log.debug("error {}", searchResult.size());
+            log.debug("Response Number of Elements: {} ", searchResult.size());
         } catch (HttpStatusCodeException e) {
             log.error("Error request/ courses {}", e);
         }
