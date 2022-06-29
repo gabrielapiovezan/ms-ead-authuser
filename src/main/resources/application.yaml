@@ -1,7 +1,7 @@
-#server:
-#  port: 8087
-#  servlet:
-#    context-path: '/ead-authuser/'
+server:
+  port: 8087
+  servlet:
+    context-path: '/ead-authuser/'
 
 spring:
   application:
@@ -12,6 +12,8 @@ spring:
     config:
       discovery:
         service-id: ead-config-server
+      username: configServer
+      password: "123456"
 #  datasource:
 #    url: jdbc:mysql://localhost:3306/ead_authuser
 #    username: user-authuser
@@ -41,15 +43,19 @@ spring:
 #  broker:
 #    exchange:
 #      userEvent: ead.userevent
-#
 #  timeout: 5000
+#authuser:
+#  refreshScope:
+#    name: Gabi 2
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include:
+#          - refresh
+#          - health
 #
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: 'http://localhost:8761/eureka'
-#  instance:
-#    hostname: localhost
+#
 #
 #resilience4j:
 #  circuitbreaker:
