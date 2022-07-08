@@ -1,9 +1,10 @@
-package com.ead.authuser.services;
+package com.ead.authuser.services.impl;
 
 import com.ead.authuser.enums.ActionType;
 import com.ead.authuser.models.UserModel;
 import com.ead.authuser.publishers.UserEventPublisher;
 import com.ead.authuser.repositories.UserRepository;
+import com.ead.authuser.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
