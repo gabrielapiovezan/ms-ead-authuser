@@ -4,6 +4,7 @@ import com.ead.authuser.models.UserModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ import static java.util.stream.Collectors.toList;
 
 @AllArgsConstructor
 @Builder
+@Data
 public class UserDetailsImpl implements UserDetails {
 
     private UUID userId;
