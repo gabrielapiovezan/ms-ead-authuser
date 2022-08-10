@@ -98,6 +98,39 @@ public class AuthenticationController {
         return "Logging Spring Boot...";
     }
 
+
+    @PostMapping("/signup/admin/usr")
+    public ResponseEntity<Object> registerUserAdmin(@RequestBody @Validated(UserDTO.UserView.RegistrationPost.class)
+                                               @JsonView(UserDTO.UserView.RegistrationPost.class) UserDTO userDTO) {
+
+        log.debug("POST Register user userDTO received {}", userDTO);
+        if (userService.existsByUserName(userDTO.getUserName())) {
+            log.warn("user {} name is Alread taken", userDTO.getUserName());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: UserName is already taken!");
+        }
+        if (userService.existsByUserEmail(userDTO.getEmail())) {
+            log.warn("email {} name is Alread taken", userDTO.getEmail());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Email is already taken!");
+        }
+
+        RoleModel roleModel = roleService.findByRoleName(RoleType.ROLE_ADMIN)
+                .orElseThrow(() -> new RuntimeException("Error: Role not found"));
+
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+
+        var userModel = new UserModel();
+        BeanUtils.copyProperties(userDTO, userModel);
+        userModel.setUserStatus(UserStatus.ACTIVE);
+        userModel.setUserType(UserType.ADMIN);
+        userModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
+        userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
+        userModel.getRoles().add(roleModel);
+
+        userService.saveUser(userModel);
+        log.debug("POST Register user userDTO saved {}", userDTO.getImageUrl());
+        log.info("user saved successfully userId {}", userModel.getUserId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(userModel);
+    }
 }
 
 
