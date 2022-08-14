@@ -28,7 +28,7 @@ public class UserCourseController {
 
     private final UserService userService;
 
-    @PreAuthorize("hasRole('STUDENT')")
+    @PreAuthorize("hasAnyRole('STUDENT')")
     @GetMapping("users/{userId}/courses")
     public ResponseEntity<Page<CourseDTO>> getAllCoursesByUser(@PageableDefault(page = 0, size = 10, sort = "courseId", direction = Sort.Direction.DESC) Pageable pageable,
                                                                @PathVariable UUID userId,

@@ -29,7 +29,7 @@ public class InstructorController {
 
     private final RoleService roleService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/subscription")
     public ResponseEntity<Object> saveSubscriptionInstructor(@RequestBody @Valid InstructorDTO instructorDTO) {
 

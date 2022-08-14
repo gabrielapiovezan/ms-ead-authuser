@@ -42,7 +42,7 @@ public class UserController {
     private final AuthenticationCurrentUserService authenticationCurrentUserService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     ResponseEntity<Page<UserModel>> getAllUsers(SpecificationTemplate.UserSpec spec,
                                                 @PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.DESC) Pageable pageable,
                                                 Authentication authentication) {
@@ -60,7 +60,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    @PreAuthorize("hasRole('STUDENT')")
+    @PreAuthorize("hasAnyRole('STUDENT')")
     ResponseEntity<Object> getUser(@PathVariable UUID userId) {
         UUID currentUserId = authenticationCurrentUserService.getCurrentUser().getUserId();
         if (currentUserId.equals(userId)) {
